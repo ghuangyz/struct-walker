@@ -68,4 +68,39 @@ func TestSimpleStruct(t *testing.T) {
 
 	value = GetValueOf(data, "key11.key10.")
 	fmt.Printf("%v\n", value)
+
+	arrayData := [3]map[string]string{
+		map[string]string{
+			"key01": "value01",
+			"key02": "value02",
+		},
+		map[string]string{
+			"key11": "value11",
+			"key12": "value12",
+		},
+		map[string]string{
+			"key21": "value21",
+			"key22": "value22",
+		},
+	}
+	value = GetValueOf(arrayData, "[2].key21")
+	fmt.Printf("%v\n", value)
+
+	sliceData := []map[string]string{
+		map[string]string{
+			"key01": "value01",
+			"key02": "value02",
+		},
+		map[string]string{
+			"key11": "value11",
+			"key12": "value12",
+		},
+		map[string]string{
+			"key21": "value21",
+			"key22": "value22",
+		},
+	}
+	value = GetValueOf(sliceData, "[1].key11")
+	fmt.Printf("%v\n", value)
+
 }

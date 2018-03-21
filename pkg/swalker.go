@@ -53,7 +53,18 @@ func resolveValue(value reflect.Value, key string) reflect.Value {
 		child = value.MapIndex(reflect.ValueOf(key))
 	} else {
 		if arrayKey, index, ok := deriveKeyAndIndex(key); ok {
-			child = value.FieldByName(arrayKey).Index(index)
+			if arrayKey == "" {
+				if value.Kind() != reflect.Array && value.Kind() != reflect.Slice {
+					panic(fmt.Sprintf(
+						"Asking for Array on key %s, but value is %v",
+						key,
+						value.Kind(),
+					))
+				}
+				child = value.Index(index)
+			} else {
+				child = value.FieldByName(arrayKey).Index(index)
+			}
 		} else {
 			child = value.FieldByName(key)
 		}
